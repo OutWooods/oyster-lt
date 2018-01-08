@@ -20,15 +20,12 @@ class OysterCard
 
   def touch_out
     @in_journey = false
+    deduct(MIN_FARE)
   end
 
   def top_up(amount)
     raise("Maximum balance exceeded, max is #{BALANCE_MAX}") if limit_exceeded?(amount)
     @balance += amount
-  end
-
-  def deduct(fare)
-    @balance -= fare
   end
 
   private
@@ -38,5 +35,9 @@ class OysterCard
 
   def minimum_fare_available?
       balance < MIN_FARE
+  end
+
+  def deduct(fare)
+    @balance -= fare
   end
 end
