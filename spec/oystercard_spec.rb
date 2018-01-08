@@ -14,5 +14,10 @@ describe OysterCard do
    it 'returns increased balance when topped up' do
      expect(card.top_up(8)).to eq 8
    end
+
+   it 'raises error when topped up above default max balance' do
+     max = OysterCard::BALANCE_MAX
+     expect{card.top_up(max + 1)}.to raise_error("Maximum balance exceeded, max is #{max}")
+   end
  end
 end
