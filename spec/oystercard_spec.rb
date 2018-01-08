@@ -6,6 +6,10 @@ describe OysterCard do
  it "has a balance" do
    expect(card.balance).to eq 0
  end
+ it 'initializes not in journey' do
+   expect(card).not_to be_in_journey
+ end
+  
  describe '#top_up' do
    it 'increases balance when topped up' do
      expect { card.top_up(5) }.to change { card.balance }.by (5)
@@ -26,4 +30,7 @@ describe OysterCard do
      expect { card.deduct(3) }.to change { card.balance }.by (-3)
    end
  end
+ # describe '#touch_in' do
+ #   it ''
+ # end
 end

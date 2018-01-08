@@ -1,8 +1,15 @@
 class OysterCard
   attr_reader :balance
+
   BALANCE_MAX = 90
+  
   def initialize
     @balance = 0
+    @in_journey = false
+  end
+
+  def in_journey?
+    @in_journey
   end
 
   def top_up(amount)
@@ -13,7 +20,7 @@ class OysterCard
   def deduct(fare)
     @balance -= fare
   end
-  
+
   private
   def limit_exceeded?(amount)
      balance + amount >= BALANCE_MAX
