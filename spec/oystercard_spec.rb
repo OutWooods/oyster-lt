@@ -3,6 +3,7 @@ require 'oyster_card'
 describe OysterCard do
  subject(:card) { described_class.new }
  let(:entry_station) { double :entry_station }
+ let(:exit_station) { double :exit_station }
 
  it "has a balance" do
    expect(card.balance).to eq 0
@@ -50,16 +51,25 @@ describe OysterCard do
      card.touch_in(entry_station)
    end
    it 'changes in journey to false' do
-     card.touch_out
+     card.touch_out(exit_station)
      expect(card).not_to be_in_journey
    end
 
    it "changes balance by minimum fare" do
-     expect { card.touch_out }.to change { card.balance }.by (-OysterCard::MIN_FARE)
+     expect { card.touch_out(exit_station) }.to change { card.balance }.by (-OysterCard::MIN_FARE)
    end
    it 'updates entry_station to nil' do
-     card.touch_out
+     card.touch_out(exit_station)
      expect(card.entry_station).to be_nil
    end
+   it 'updates entry_station to nil' do
+     card.touch_out(exit_station)
+     expect(card.exit_station).to eq(exit_station)
+   end
+   it 'journey history should store exit station' do
+     card.touch_out(exit_station)
+     expect(card.journey_history).to include exit_station
+   end
+
  end
 end
