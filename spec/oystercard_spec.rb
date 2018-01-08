@@ -5,12 +5,17 @@ describe OysterCard do
  let(:entry_station) { double :entry_station }
  let(:exit_station) { double :exit_station }
 
- it "has a balance" do
-   expect(card.balance).to eq 0
- end
- it 'initializes not in journey' do
-   expect(card).not_to be_in_journey
- end
+describe '#initialize' do
+  it " initializes with a 0 balance" do
+    expect(card.balance).to eq 0
+  end
+  it 'initializes not in journey' do
+    expect(card).not_to be_in_journey
+  end
+  it 'journey_history initializes empty' do
+    expect(card.journey_history).to be_empty
+  end
+end
 
  describe '#top_up' do
    it 'increases balance when topped up' do
@@ -43,8 +48,8 @@ describe OysterCard do
        expect(card.entry_station).to eq entry_station
      end
    end
-
  end
+
  describe '#touch_out' do
    before do
      card.top_up(OysterCard::MIN_FARE)
@@ -54,7 +59,6 @@ describe OysterCard do
      card.touch_out(exit_station)
      expect(card).not_to be_in_journey
    end
-
    it "changes balance by minimum fare" do
      expect { card.touch_out(exit_station) }.to change { card.balance }.by (-OysterCard::MIN_FARE)
    end
@@ -62,14 +66,13 @@ describe OysterCard do
      card.touch_out(exit_station)
      expect(card.entry_station).to be_nil
    end
-   it 'updates entry_station to nil' do
+   it 'stores exit station' do
      card.touch_out(exit_station)
      expect(card.exit_station).to eq(exit_station)
    end
    it 'journey history should store exit and entry station' do
      card.touch_out(exit_station)
-     expect(card.journey_history).to include({ entry: entry_station, exit: exit_station })
+     expect(card.journey_history).to include( { entry: entry_station, exit: exit_station } )
    end
-
  end
 end
