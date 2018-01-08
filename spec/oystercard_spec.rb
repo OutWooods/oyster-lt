@@ -66,9 +66,9 @@ describe OysterCard do
      card.touch_out(exit_station)
      expect(card.exit_station).to eq(exit_station)
    end
-   it 'journey history should store exit station' do
+   it 'journey history should store exit and entry station' do
      card.touch_out(exit_station)
-     expect(card.journey_history).to include exit_station
+     expect(card.journey_history).to include({ entry: entry_station, exit: exit_station })
    end
 
  end
