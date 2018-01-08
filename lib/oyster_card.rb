@@ -16,6 +16,10 @@ class OysterCard
     @in_journey = true
   end
 
+  def touch_out
+    @in_journey = false
+  end
+
   def top_up(amount)
     raise("Maximum balance exceeded, max is #{BALANCE_MAX}") if limit_exceeded?(amount)
     @balance += amount
