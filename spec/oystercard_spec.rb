@@ -32,7 +32,7 @@ describe OysterCard do
  end
  describe '#touch_in' do
    it 'changes in journey to true' do
-     card.top_up(1)
+     card.top_up(OysterCard::MIN_FARE)
      card.touch_in
      expect(card).to be_in_journey
    end
@@ -42,7 +42,7 @@ describe OysterCard do
  end
  describe '#touch_out' do
    it 'changes in journey to false' do
-     card.top_up(1)
+     card.top_up(OysterCard::MIN_FARE)
      card.touch_in
      card.touch_out
      expect(card).not_to be_in_journey
